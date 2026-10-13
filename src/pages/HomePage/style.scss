@@ -1,0 +1,29 @@
+@use "../../styles/index" as *;
+
+$padding: 11vh;
+
+.background {
+  background: $background-gradient;
+  position: relative;
+
+  &__images {
+    position: absolute;
+    top: $padding;
+    left: 0;
+    width: 100%;
+    height: calc(100% - $padding);
+    object-fit: cover; /* Аналог background-size: cover */
+    z-index: 1; /* Отправляем картинку на задний план */
+    background-image: url(../../assets/images/background.png);
+    background-position: center bottom;
+    background-repeat: repeat-x;
+    background-size: contain;
+  }
+}
+
+.home__content {
+  padding-top: 8.7vh;
+  @include flex-column-center;
+  gap: 32px;
+  z-index: 10;
+}

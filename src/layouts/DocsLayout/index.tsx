@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
-import { MdxComponent } from "../../components/MdxComponent";
-import { LessonsList } from "../../components/LessonListComponent";
+import { MdxComponent } from "../../components/Mdx";
+import { LessonsList } from "../../components/LessonList";
 
 type DocsLayoutProps = {
   section: "theory" | "components";

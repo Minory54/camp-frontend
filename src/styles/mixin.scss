@@ -1,9 +1,20 @@
 @mixin flex-column {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 @mixin flex-column-center {
-    @include flex-column;
-    align-items:center;
+  @include flex-column;
+  align-items: center;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin text-title {
+  font-family: "8bitoperatorJVE", sans-serif;
+  line-height: 80%;
+  letter-spacing: 3%;
 }

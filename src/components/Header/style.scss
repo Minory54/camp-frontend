@@ -1,0 +1,53 @@
+@use "../../styles/index.scss" as *;
+
+.header {
+  width: 100%;
+
+  background-color: $background-color;
+  border-bottom: 3px solid $border-main-color;
+
+  padding: 24px 32px;
+
+  font-size: 24px;
+
+  color: $text-dark-color;
+
+  z-index: 10;
+
+  &--transparent {
+    background-color: transparent;
+    border-bottom: none;
+
+    color: $text-light-color;
+  }
+
+  &__nav {
+    @include flex-center;
+    align-items: center;
+    gap: 3.5vw;
+  }
+}
+
+.nav__link {
+  font-family: "8bitoperatorJVE", sans-serif;
+  font-size: 24px;
+
+  color: inherit;
+
+  background: linear-gradient(currentColor 0 0) bottom / var(--d, 0) 2px no-repeat;
+  transition: 0.5s;
+
+  &:hover {
+    --d: 100%;
+  }
+}
+
+.header--transparent > .header__nav > .vertical-line {
+  border-left: 2px solid #fff; /* толщина, стиль и цвет линии */
+  height: 20px;
+}
+
+.header__nav > .vertical-line {
+  border-left: 2px solid $border-main-color; /* толщина, стиль и цвет линии */
+  height: 20px;
+}

@@ -1,0 +1,45 @@
+@use "../../styles/index.scss" as *;
+.text {
+}
+
+.text--display {
+  @include text-title;
+  font-size: 11.85vh;
+  text-align: center;
+  color: $text-light-color;
+
+  text-shadow: 0px 8px 0px $text-display-shadow-color;
+}
+
+.text--title {
+  @include text-title;
+  font-size: 32px;
+
+  & + .mdx::before {
+    content: "# ";
+    @include text-title;
+    color: $accent-color;
+  }
+}
+
+.text--subtitle {
+  @include text-title;
+  font-size: 24px;
+
+  & + .mdx::before {
+    content: "## ";
+    @include text-title;
+    color: $accent-color;
+  }
+}
+
+.text--subsubtitle {
+  @include text-title;
+  font-size: 18px;
+
+  & + .mdx::before {
+    content: "### ";
+    @include text-title;
+    color: $accent-color;
+  }
+}
