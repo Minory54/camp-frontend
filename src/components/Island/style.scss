@@ -1,0 +1,6 @@
+@use "../../styles/index" as *;
+
+.island {
+  @include flex-column-center;
+  width: min(704px, 100%);
+}

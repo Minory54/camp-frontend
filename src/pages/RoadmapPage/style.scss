@@ -1,0 +1,14 @@
+@use "../../styles/index" as *;
+
+$bg-water-size: 70px;
+
+.roadmap {
+  background-color: $island-water-color;
+  background-image: url(../../assets/pixel/water.png);
+  background-size: $bg-water-size $bg-water-size;
+
+  &__islands {
+    @include flex-column-center;
+    padding-top: 16px;
+  }
+}

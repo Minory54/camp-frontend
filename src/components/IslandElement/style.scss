@@ -1,0 +1,64 @@
+@use "../../styles/index" as *;
+
+.island-element {
+  background-color: $island-ground-color;
+  width: 100%;
+  position: relative;
+  margin-bottom: -16px;
+
+  &__group {
+    @include flex-center;
+    gap: 16px;
+
+    padding: 8px 10px 16px 10px;
+    background-color: $island-path-color;
+    clip-path: $pixel-shape;
+  }
+
+  &--base {
+    height: 96px;
+  }
+
+  &--start {
+    height: 48px;
+    width: min(640px, 100% - 64px);
+  }
+
+  &--end {
+    height: 48px;
+    width: min(576px, 100% - 128px);
+  }
+
+  &--bridge {
+    background-color: transparent;
+    background-image: url(../../assets/pixel//bridge.svg);
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    margin: -4px 0;
+    min-height: 100px;
+    z-index: 10;
+  }
+}
+
+$bg-grass-size: 120px;
+
+.land {
+  position: absolute;
+  @include flex-column-center;
+  inset: 0 8px 16px;
+
+  background-color: $island-grass-color;
+  background-image: url(../../assets/pixel/pixel_grass_seamless_soft.svg);
+  background-repeat: repeat;
+  background-size: $bg-grass-size $bg-grass-size;
+
+  &::after,
+  &::before {
+    content: "";
+    background-color: $island-path-color;
+    height: 100%;
+    width: 48px;
+  }
+}

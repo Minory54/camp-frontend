@@ -7,8 +7,8 @@ import "./style.scss";
 export const HomePage = () => {
   return (
     <>
-      <main className="layout-wrapper background">
-        <section className="home container">
+      <main className="layout-wrapper home">
+        <section className="container">
           <Header transparency />
           <div className="home__content">
             <Typography variable="display">Школа цифрового творчества</Typography>
@@ -17,7 +17,7 @@ export const HomePage = () => {
             </Button>
           </div>
         </section>
-        <section className="background__images"></section>
+        <section className="home__images"></section>
       </main>
     </>
   );

@@ -11,9 +11,10 @@ interface ButtonProp {
   className?: string;
   to?: string;
   display?: boolean;
+  small?: boolean;
 }
 
-export const Button = ({ display, link, to = "/", color, className, children }: ButtonProp) => {
+export const Button = ({ display, link, to = "/", color, className, children, small }: ButtonProp) => {
   const Tag = link ? NavLink : "button";
 
   switch (color) {
@@ -21,32 +22,32 @@ export const Button = ({ display, link, to = "/", color, className, children }: 
       return (
         <Tag
           to={to}
-          className={clsx("button", "button--yellow", display && "button--display", className)}
+          className={clsx("button", "button--yellow", display && "button--display", small && "button--small", className)}
         >
           {children}
         </Tag>
       );
     case "blue":
       return (
-        <Tag to={to} className={clsx("button", "button--blue", display && "button--display", className)}>
+        <Tag to={to} className={clsx("button", "button--blue", display && "button--display", small && "button--small", className)}>
           {children}
         </Tag>
       );
     case "green":
       return (
-        <Tag to={to} className={clsx("button", "button--green", display && "button--display", className)}>
+        <Tag to={to} className={clsx("button", "button--green", display && "button--display", small && "button--small", className)}>
           {children}
         </Tag>
       );
     case "grey":
       return (
-        <Tag to={to} className={clsx("button", "button--grey", display && "button--display", className)}>
+        <Tag to={to} className={clsx("button", "button--grey", display && "button--display", small && "button--small", className)}>
           {children}
         </Tag>
       );
     default:
       return (
-        <Tag to={to} className={clsx("button", "button--base", display && "button--display", className)}>
+        <Tag to={to} className={clsx("button", "button--base", display && "button--display", small && "button--small", className)}>
           {children}
         </Tag>
       );

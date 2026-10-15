@@ -62,6 +62,13 @@
     }
   }
 
+  &--small {
+    min-width: 45px;
+    padding: 11px 4px;
+    font-size: 16px;
+    line-height: 16px
+  }
+
   &--display {
     font-size: 24px;
     padding: 20px 32px;

@@ -2,7 +2,7 @@
 
 $padding: 11vh;
 
-.background {
+.home {
   background: $background-gradient;
   position: relative;
 
@@ -19,11 +19,11 @@ $padding: 11vh;
     background-repeat: repeat-x;
     background-size: contain;
   }
-}
 
-.home__content {
-  padding-top: 8.7vh;
-  @include flex-column-center;
-  gap: 32px;
-  z-index: 10;
+  &__content {
+    padding-top: 8.7vh;
+    @include flex-column-center;
+    gap: 32px;
+    z-index: 10;
+  }
 }
