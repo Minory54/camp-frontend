@@ -1,6 +1,7 @@
 import { useGetCourseById, useGetCourseProgress } from "../../api/generated";
 import { Header } from "../../components/Header";
 import { Island } from "../../components/Island";
+import { ProgressBar } from "../../components/ProgressBar";
 import "./style.scss";
 
 export const RoadmapPage = () => {
@@ -20,6 +21,10 @@ export const RoadmapPage = () => {
       <main className="layout-wrapper roadmap">
         <section className="container roadmap__content">
           <Header transparency></Header>
+          <ProgressBar
+            completed={progressQuery.data.lessons.filter((lesson) => lesson.isCompleted).length}
+            total={progressQuery.data.lessons.length}
+          />
 
           <div className="roadmap__islands">
             {courseQuery.data.Groups?.map((group, index, groups) => (
