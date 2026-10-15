@@ -7,6 +7,6 @@ export const ROUTES = {
 
   RULE: "/rule",
 
-  THEORY: "theory/:id?",
-  COMPONENTS: "components/:id?",
+  THEORY: "/theory",
+  COMPONENTS: "/components",
 };

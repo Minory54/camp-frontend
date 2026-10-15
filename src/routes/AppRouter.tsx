@@ -22,8 +22,8 @@ export const AppRouter = () => {
       <Route path={ROUTES.RULE} element={<RulePage />} />
 
       <Route>
-        <Route path={ROUTES.THEORY} element={<DocsLayout section="theory" />} />
-        <Route path={ROUTES.COMPONENTS} element={<DocsLayout section="components" />} />
+        <Route path={`${ROUTES.THEORY}/:id?`} element={<DocsLayout section="theory" />} />
+        <Route path={`${ROUTES.COMPONENTS}/:id?`} element={<DocsLayout section="components" />} />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />

@@ -1,7 +1,9 @@
+import { Header } from "../../components/Header";
+
 export const RulePage = () => {
   return (
     <>
-      <h1>Rule page</h1>
+      <Header />
     </>
   );
 };
