@@ -91,7 +91,8 @@ export const IslandElement = ({ lesson, available, variable = "base" }: IslandEl
                     <Button
                       link={available}
                       to={`${button.path}/${button.id}`}
-                      color={available ? button.color : "grey"}
+                      color={button.color}
+                      disabled = {!available}
                       small
                     >
                       {button.label}

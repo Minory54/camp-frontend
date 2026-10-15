@@ -12,44 +12,42 @@ interface ButtonProp {
   to?: string;
   display?: boolean;
   small?: boolean;
+  onClick?: () => void;
+  disabled?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
-export const Button = ({ display, link, to = "/", color, className, children, small }: ButtonProp) => {
-  const Tag = link ? NavLink : "button";
+export const Button = ({
+  display,
+  link,
+  to = "/",
+  color = "base",
+  className,
+  children,
+  small,
+  onClick,
+  disabled = false,
+  type = "button",
+}: ButtonProp) => {
+  const buttonClassName = clsx(
+    "button",
+    `button--${disabled ? "grey" : color}`,
+    display && "button--display",
+    small && "button--small",
+    className,
+  );
 
-  switch (color) {
-    case "yellow":
-      return (
-        <Tag
-          to={to}
-          className={clsx("button", "button--yellow", display && "button--display", small && "button--small", className)}
-        >
-          {children}
-        </Tag>
-      );
-    case "blue":
-      return (
-        <Tag to={to} className={clsx("button", "button--blue", display && "button--display", small && "button--small", className)}>
-          {children}
-        </Tag>
-      );
-    case "green":
-      return (
-        <Tag to={to} className={clsx("button", "button--green", display && "button--display", small && "button--small", className)}>
-          {children}
-        </Tag>
-      );
-    case "grey":
-      return (
-        <Tag to={to} className={clsx("button", "button--grey", display && "button--display", small && "button--small", className)}>
-          {children}
-        </Tag>
-      );
-    default:
-      return (
-        <Tag to={to} className={clsx("button", "button--base", display && "button--display", small && "button--small", className)}>
-          {children}
-        </Tag>
-      );
+  if (link && !disabled) {
+    return (
+      <NavLink to={to} className={buttonClassName} onClick={onClick}>
+        {children}
+      </NavLink>
+    );
   }
+
+  return (
+    <button type={type} className={buttonClassName} onClick={onClick} disabled={disabled}>
+      {children}
+    </button>
+  );
 };

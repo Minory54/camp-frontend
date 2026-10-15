@@ -5,12 +5,12 @@
   position: relative;
   cursor: pointer;
   border: none;
-  padding: 12px 24px;
+  padding: 16px 24px;
   transition: transform 0.1s;
   transform-style: preserve-3d;
   transition: transform 150ms cubic-bezier(0, 0, 0.58, 1);
   background: transparent;
-
+  outline: none;
 
   margin-top: $button-transform;
 
@@ -18,7 +18,7 @@
 
   @include text-title;
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
 
   &::before {
     position: absolute;
@@ -54,7 +54,7 @@
     border-image: pixel-border-image($btn-white-border-color);
   }
 
-  &:active {
+  &:not(:disabled):active {
     transform: translate(0em, $button-transform);
 
     &::before {
@@ -62,11 +62,20 @@
     }
   }
 
+  &:disabled {
+    cursor: not-allowed;
+
+    &,
+    &::before {
+      transition: none;
+    }
+  }
+
   &--small {
     min-width: 64px;
     padding: 12px 16px;
     font-size: 16px;
-    line-height: 16px
+    line-height: 16px;
   }
 
   &--display {

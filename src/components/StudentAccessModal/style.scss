@@ -1,0 +1,96 @@
+@use "../../styles/index" as *;
+
+.student-access {
+  width: min(480px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  clip-path: $pixel-shape;
+  border-image: pixel-border-image($border-main-color);
+  background: $background-color;
+  color: $text-dark-color;
+  box-shadow: 8px 8px 0 rgba(25, 52, 94, 0.3);
+
+  &::backdrop {
+    background: rgba(19, 44, 79, 0.65);
+    backdrop-filter: blur(4px);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 32px;
+  }
+
+  &__eyebrow {
+    color: $btn-blue-border-color;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  &__title {
+    @include text-title;
+    font-size: clamp(28px, 6vw, 36px);
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+  }
+
+  &__actions,
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: 8px;
+  }
+
+  &__form label {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  input {
+    width: 100%;
+    min-width: 0;
+    padding: 14px 16px;
+    border: 2px solid $btn-white-border-color;
+    border-radius: 0;
+    background: #f4f8ff;
+    color: inherit;
+    font-size: 16px;
+  }
+
+  &__back {
+    align-self: center;
+    cursor: pointer;
+    text-decoration: underline;
+    color: $accent-color;
+  }
+
+  &__recovery-code {
+    padding: 20px;
+    border: 2px dashed $btn-yellow-border-color;
+    background: $tooltip-yellow-second-color;
+    font-size: clamp(26px, 7vw, 36px);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-align: center;
+  }
+
+  &__hint,
+  &__status {
+    font-size: 12px;
+  }
+
+  &__error {
+    color: #b33232;
+  }
+
+  @media (max-width: 480px) {
+    &__content {
+      gap: 16px;
+      padding: 24px 20px;
+    }
+  }
+}

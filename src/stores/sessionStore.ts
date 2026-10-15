@@ -19,7 +19,7 @@ export const useSessionStore = create<SessionState>()(
     }),
     {
       name: "camp-session",
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );
