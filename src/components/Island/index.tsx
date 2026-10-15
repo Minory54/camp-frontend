@@ -5,9 +5,10 @@ import "./style.scss";
 interface IslandProps {
   group: GetCourseById200GroupsItem;
   progress: GetCourseProgress200["lessons"];
+  showBridge: boolean;
 }
 
-export const Island = ({ group, progress }: IslandProps) => {
+export const Island = ({ group, progress, showBridge }: IslandProps) => {
   return (
     <section className="island">
       <IslandElement variable="start"/>
@@ -24,7 +25,7 @@ export const Island = ({ group, progress }: IslandProps) => {
         );
       })}
       <IslandElement variable="end"/>
-      <IslandElement variable="bridge"/>
+      {showBridge && <IslandElement variable="bridge"/>}
     </section>
   );
 };

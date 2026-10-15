@@ -22,8 +22,13 @@ export const RoadmapPage = () => {
           <Header transparency></Header>
 
           <div className="roadmap__islands">
-            {courseQuery.data.Groups?.map((group) => (
-              <Island key={group.id} group={group} progress={progressQuery.data.lessons} />
+            {courseQuery.data.Groups?.map((group, index, groups) => (
+              <Island
+                key={group.id}
+                group={group}
+                progress={progressQuery.data.lessons}
+                showBridge={index < groups.length - 1}
+              />
             ))}
           </div>
         </section>

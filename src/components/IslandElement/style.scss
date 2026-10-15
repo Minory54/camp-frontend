@@ -8,15 +8,117 @@
 
   &__group {
     @include flex-center;
-    gap: 16px;
+    position: relative;
+    gap: 32px;
 
-    padding: 8px 10px 16px 10px;
-    background-color: $island-path-color;
+    padding: 8px 16px 16px 16px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: $island-path-color;
+      clip-path: $pixel-shape;
+    }
+  }
+
+  &__button {
+    position: relative;
+  }
+
+  &__tooltip {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 16px);
+    z-index: 20;
+    width: max(100%, 320px);
+    padding: 24px;
+    background-color: $background-color;
+    color: $text-dark-color;
+    overflow-wrap: anywhere;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-8px, -50%);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease,
+      visibility 180ms;
     clip-path: $pixel-shape;
+
+    h3 {
+      @include text-title;
+      font-size: 24px;
+      font-weight: normal;
+    }
+
+    p {
+      margin-top: 12px;
+      font-size: 16px;
+    }
+
+    @each $color, $accent,
+      $second
+        in (
+          ("blue", $tooltip-blue-accent-color, $tooltip-blue-second-color),
+          ("green", $tooltip-green-accent-color, $tooltip-green-second-color),
+          ("yellow", $tooltip-yellow-accent-color, $tooltip-yellow-second-color),
+          ("grey", $tooltip-grey-accent-color, $tooltip-grey-second-color)
+        )
+    {
+      &--#{$color} {
+        border-image: pixel-border-image($second);
+
+        h3,
+        .island-element__tooltip-tag::before {
+          color: $accent;
+        }
+
+        .island-element__tooltip-tag {
+          background-color: $second;
+        }
+      }
+    }
+  }
+
+  &__tooltip-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  &__tooltip-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    clip-path: $pixel-shape;
+    font-size: 14px;
+
+    &::before {
+      content: "#";
+      @include text-title;
+      font-size: 18px;
+    }
+  }
+
+  @media (hover: hover) {
+    &__button > .button:hover + &__tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(0, -50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__tooltip {
+      transition: none;
+    }
   }
 
   &--base {
-    height: 96px;
+    height: 104px;
   }
 
   &--start {
