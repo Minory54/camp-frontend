@@ -6,5 +6,5 @@
  */
 
 export type GetCourseProgressParams = {
-studentId?: string;
+studentId: string;
 };

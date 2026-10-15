@@ -4,6 +4,7 @@
  * Camp API
  * OpenAPI spec version: 1.0.0
  */
+import type { GetTechnologyById200TheoriesItem } from './getTechnologyById200TheoriesItem';
 
 export type GetTechnologyById200 = {
   id: number;
@@ -13,5 +14,5 @@ export type GetTechnologyById200 = {
      * @pattern \S
      */
   title: string;
-  Theories?: unknown[];
+  Theories?: GetTechnologyById200TheoriesItem[];
 };

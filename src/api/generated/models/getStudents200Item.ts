@@ -4,6 +4,8 @@
  * Camp API
  * OpenAPI spec version: 1.0.0
  */
+import type { GetStudents200ItemLessonProgressItem } from './getStudents200ItemLessonProgressItem';
+import type { GetStudents200ItemPracticeSavesItem } from './getStudents200ItemPracticeSavesItem';
 
 export type GetStudents200Item = {
   id: string;
@@ -16,6 +18,6 @@ export type GetStudents200Item = {
   label: string | null;
   created_at: string;
   updated_at: string;
-  Lesson_progress?: unknown[];
-  Practice_saves?: unknown[];
+  Lesson_progress?: GetStudents200ItemLessonProgressItem[];
+  Practice_saves?: GetStudents200ItemPracticeSavesItem[];
 };

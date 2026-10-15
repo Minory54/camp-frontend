@@ -4,6 +4,8 @@
  * Camp API
  * OpenAPI spec version: 1.0.0
  */
+import type { CreatePractice201PracticeFilesItem } from './createPractice201PracticeFilesItem';
+import type { CreatePractice201PracticeSavesItem } from './createPractice201PracticeSavesItem';
 
 export type CreatePractice201 = {
   id: number;
@@ -21,6 +23,6 @@ export type CreatePractice201 = {
      */
   mdx_source: string;
   Lessons?: unknown[];
-  Practice_saves?: unknown[];
-  Practice_files?: unknown[];
+  Practice_saves?: CreatePractice201PracticeSavesItem[];
+  Practice_files?: CreatePractice201PracticeFilesItem[];
 };

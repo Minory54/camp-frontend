@@ -4,6 +4,7 @@
  * Camp API
  * OpenAPI spec version: 1.0.0
  */
+import type { UpdateGroup200LessonsItem } from './updateGroup200LessonsItem';
 import type { UpdateGroup200State } from './updateGroup200State';
 
 export type UpdateGroup200 = {
@@ -13,5 +14,5 @@ export type UpdateGroup200 = {
   position: number;
   state: typeof UpdateGroup200State[keyof typeof UpdateGroup200State];
   course?: unknown;
-  Lessons?: unknown[];
+  Lessons?: UpdateGroup200LessonsItem[];
 };

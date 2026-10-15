@@ -446,7 +446,7 @@ export const useDeleteCourse = <TError = ErrorType<unknown>,
  */
 export const getCourseProgress = (
     id: number,
-    params?: GetCourseProgressParams,
+    params: GetCourseProgressParams,
  options?: SecondParameter<typeof apiRequest>,signal?: AbortSignal
 ) => {
 
@@ -470,7 +470,7 @@ export const getGetCourseProgressQueryKey = (id: number,
 
 
 export const getGetCourseProgressQueryOptions = <TData = Awaited<ReturnType<typeof getCourseProgress>>, TError = ErrorType<unknown>>(id: number,
-    params?: GetCourseProgressParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCourseProgress>>, TError, TData>>, request?: SecondParameter<typeof apiRequest>}
+    params: GetCourseProgressParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCourseProgress>>, TError, TData>>, request?: SecondParameter<typeof apiRequest>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -494,7 +494,7 @@ export type GetCourseProgressQueryError = ErrorType<unknown>
 
 export function useGetCourseProgress<TData = Awaited<ReturnType<typeof getCourseProgress>>, TError = ErrorType<unknown>>(
  id: number,
-    params: undefined |  GetCourseProgressParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCourseProgress>>, TError, TData>> & Pick<
+    params: GetCourseProgressParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCourseProgress>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getCourseProgress>>,
           TError,
@@ -505,7 +505,7 @@ export function useGetCourseProgress<TData = Awaited<ReturnType<typeof getCourse
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetCourseProgress<TData = Awaited<ReturnType<typeof getCourseProgress>>, TError = ErrorType<unknown>>(
  id: number,
-    params?: GetCourseProgressParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCourseProgress>>, TError, TData>> & Pick<
+    params: GetCourseProgressParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCourseProgress>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getCourseProgress>>,
           TError,
@@ -516,7 +516,7 @@ export function useGetCourseProgress<TData = Awaited<ReturnType<typeof getCourse
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetCourseProgress<TData = Awaited<ReturnType<typeof getCourseProgress>>, TError = ErrorType<unknown>>(
  id: number,
-    params?: GetCourseProgressParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCourseProgress>>, TError, TData>>, request?: SecondParameter<typeof apiRequest>}
+    params: GetCourseProgressParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCourseProgress>>, TError, TData>>, request?: SecondParameter<typeof apiRequest>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
@@ -525,7 +525,7 @@ export function useGetCourseProgress<TData = Awaited<ReturnType<typeof getCourse
 
 export function useGetCourseProgress<TData = Awaited<ReturnType<typeof getCourseProgress>>, TError = ErrorType<unknown>>(
  id: number,
-    params?: GetCourseProgressParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCourseProgress>>, TError, TData>>, request?: SecondParameter<typeof apiRequest>}
+    params: GetCourseProgressParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCourseProgress>>, TError, TData>>, request?: SecondParameter<typeof apiRequest>}
  , queryClient?: QueryClient
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 

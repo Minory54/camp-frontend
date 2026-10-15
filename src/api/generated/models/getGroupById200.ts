@@ -4,6 +4,7 @@
  * Camp API
  * OpenAPI spec version: 1.0.0
  */
+import type { GetGroupById200LessonsItem } from './getGroupById200LessonsItem';
 import type { GetGroupById200State } from './getGroupById200State';
 
 export type GetGroupById200 = {
@@ -13,5 +14,5 @@ export type GetGroupById200 = {
   position: number;
   state: typeof GetGroupById200State[keyof typeof GetGroupById200State];
   course?: unknown;
-  Lessons?: unknown[];
+  Lessons?: GetGroupById200LessonsItem[];
 };
