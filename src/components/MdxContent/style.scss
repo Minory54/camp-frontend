@@ -1,0 +1,104 @@
+@use "../../styles/index.scss" as *;
+
+.mdx-content {
+  font-size: 13px;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+
+  h1,
+  h2,
+  h3 {
+    margin: 28px 0 20px;
+    font-family: "8bitoperatorJVE", sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+    scroll-margin-top: 24px;
+
+    &::before {
+      color: $accent-color;
+    }
+  }
+
+  h1 {
+    margin-top: 0;
+    margin-bottom: 28px;
+    font-size: 24px;
+
+    &::before {
+      content: "# ";
+    }
+  }
+
+  h2 {
+    font-size: 18px;
+
+    &::before {
+      content: "## ";
+    }
+  }
+
+  h3 {
+    margin-top: 22px;
+    font-size: 14px;
+
+    &::before {
+      content: "### ";
+    }
+  }
+
+  p,
+  ul,
+  ol {
+    margin-bottom: 20px;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  ul,
+  ol {
+    padding-left: 20px;
+    line-height: 1.3;
+  }
+
+  p.mdx-content__list-caption {
+    margin-bottom: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: $accent-color;
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: $accent-color;
+    }
+  }
+
+  code {
+    font-family: monospace;
+    font-size: 12px;
+  }
+
+  &__code {
+    margin-bottom: 22px;
+    overflow: hidden;
+    border-radius: 3px;
+    background-color: $code-bg-color;
+    color: #66d9ff;
+  }
+
+  &__code-title {
+    padding: 8px 14px;
+    background-color: #10171d;
+    font-family: monospace;
+    font-size: 12px;
+    color: $text-light-color;
+  }
+
+  pre {
+    padding: 14px 22px;
+    overflow-x: auto;
+    line-height: 1.7;
+  }
+}

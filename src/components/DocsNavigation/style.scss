@@ -1,0 +1,42 @@
+@use "../../styles/index.scss" as *;
+
+.docs-navigation {
+  &__group + &__group {
+    margin-top: 24px;
+  }
+
+  &__title {
+    color: $accent-color;
+    margin-bottom: 12px;
+  }
+
+  &__list {
+    list-style: none;
+  }
+
+  &__link {
+    display: block;
+    padding: 7px 13px;
+    border-left: 2px solid $border-main-color;
+    font-size: 13px;
+    line-height: 15px;
+    color: inherit;
+
+    &:hover,
+    &:focus-visible {
+      background-color: #edf7ff;
+    }
+
+    &--active {
+      border-left-color: $accent-color;
+      background-color: #d8ecff;
+      font-weight: 600;
+      color: #1675ed;
+
+      &:hover,
+      &:focus-visible {
+        background-color: #d8ecff;
+      }
+    }
+  }
+}

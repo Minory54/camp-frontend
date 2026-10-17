@@ -6,7 +6,7 @@ import { PracticePage } from "../pages/PracticePage";
 import { TestPage } from "../pages/TestPage";
 import { RulePage } from "../pages/RulesPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
-import { DocsLayout } from "../layouts/DocsLayout";
+import { DocsPage } from "../pages/DocsPage";
 
 export const AppRouter = () => {
   return (
@@ -15,15 +15,15 @@ export const AppRouter = () => {
 
       <Route>
         <Route path={ROUTES.ROADMAP} element={<RoadmapPage />} />
-        <Route path={ROUTES.PRACTICE} element={<PracticePage />} />
-        <Route path={ROUTES.TEST} element={<TestPage />} />
+        <Route path={`${ROUTES.PRACTICE}/:id?`} element={<PracticePage />} />
+        <Route path={`${ROUTES.TEST}/:id?`} element={<TestPage />} />
       </Route>
 
       <Route path={ROUTES.RULE} element={<RulePage />} />
 
       <Route>
-        <Route path={`${ROUTES.THEORY}/:id?`} element={<DocsLayout section="theory" />} />
-        <Route path={`${ROUTES.COMPONENTS}/:id?`} element={<DocsLayout section="components" />} />
+        <Route path={`${ROUTES.THEORY}/:id?`} element={<DocsPage section="theory" />} />
+        <Route path={`${ROUTES.COMPONENTS}/:id?`} element={<DocsPage section="components" />} />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />

@@ -1,0 +1,67 @@
+@use "../../styles/index.scss" as *;
+
+.docs {
+  color: $text-dark-color;
+
+  &__layout {
+    display: grid;
+    grid-template-columns: 19.4% minmax(0, 1fr) 19.4%;
+    align-items: start;
+    min-height: 100vh;
+    background: linear-gradient(
+      to right,
+      #f7faff 19.4%,
+      $background-color 19.4%,
+      $background-color 80.6%,
+      #f7faff 80.6%
+    );
+  }
+
+  &__sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 28px 32px;
+
+    &--navigation {
+      padding-left: 24px;
+      border-right: 3px solid $border-main-color;
+    }
+  }
+
+  &__panel-title {
+    margin-bottom: 10px;
+    font-family: "8bitoperatorJVE", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: $accent-color;
+  }
+
+  &__article {
+    width: min(770px, calc(100% - 96px));
+    min-width: 0;
+    margin: 0 auto;
+    padding: 28px 0 56px;
+  }
+
+  &__message {
+    font-size: 13px;
+    line-height: 1.5;
+
+    p {
+      font-size: inherit;
+    }
+  }
+
+  &__retry {
+    margin-top: 12px;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    color: $accent-color;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
