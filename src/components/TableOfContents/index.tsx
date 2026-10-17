@@ -10,7 +10,7 @@ type Heading = {
 
 type TableOfContentsProps = {
   contentRef: RefObject<HTMLElement | null>;
-  documentId: number;
+  documentId: number | string;
 };
 
 export const TableOfContents = ({ contentRef, documentId }: TableOfContentsProps) => {
@@ -18,18 +18,11 @@ export const TableOfContents = ({ contentRef, documentId }: TableOfContentsProps
   const [activeId, setActiveId] = useState("");
 
   useEffect(() => {
-    const elements = Array.from(
-      contentRef.current!.querySelectorAll<HTMLHeadingElement>("h1, h2, h3"),
-    );
-    const items = elements.map((element, index) => {
-      element.id ||= `heading-${index + 1}`;
+    const article = contentRef.current;
+    if (!article) return;
 
-      return {
-        id: element.id,
-        title: element.textContent ?? "",
-        level: Number(element.tagName[1]),
-      };
-    });
+    let elements: HTMLHeadingElement[] = [];
+    let frame = 0;
 
     const updateActiveHeading = () => {
       const atBottom =
@@ -43,16 +36,36 @@ export const TableOfContents = ({ contentRef, documentId }: TableOfContentsProps
       setActiveId(current?.id ?? "");
     };
 
-    const frame = requestAnimationFrame(() => {
-      setHeadings(items);
-      updateActiveHeading();
-    });
+    const collectHeadings = () => {
+      elements = Array.from(article.querySelectorAll<HTMLHeadingElement>("h1, h2, h3"));
+      const items = elements.map((element, index) => {
+        element.id ||= `heading-${index + 1}`;
+
+        return {
+          id: element.id,
+          title: element.textContent ?? "",
+          level: Number(element.tagName[1]),
+        };
+      });
+
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        setHeadings(items);
+        updateActiveHeading();
+      });
+    };
+
+    collectHeadings();
+
+    const observer = new MutationObserver(collectHeadings);
+    observer.observe(article, { childList: true, subtree: true, characterData: true });
 
     window.addEventListener("scroll", updateActiveHeading, { passive: true });
     window.addEventListener("resize", updateActiveHeading);
 
     return () => {
       cancelAnimationFrame(frame);
+      observer.disconnect();
       window.removeEventListener("scroll", updateActiveHeading);
       window.removeEventListener("resize", updateActiveHeading);
     };

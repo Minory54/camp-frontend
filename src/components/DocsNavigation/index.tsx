@@ -5,9 +5,9 @@ import { Typography } from "../Typography";
 
 type DocsNavigationProps = {
   groups: {
-    id: number;
+    id: number | string;
     title: string;
-    items: { id: number; title: string }[];
+    items: { id: number | string; title: string }[];
   }[];
   basePath: string;
 };
@@ -17,7 +17,9 @@ export const DocsNavigation = ({ groups, basePath }: DocsNavigationProps) => {
     <nav className="docs-navigation" aria-label="Навигация по материалам">
       {groups.map((group) => (
         <section className="docs-navigation__group" key={group.id}>
-          <Typography variable="subsubtitle" className="docs-navigation__title">{group.title}</Typography>
+          <Typography variable="subsubtitle" className="docs-navigation__title">
+            {group.title}
+          </Typography>
           <ul className="docs-navigation__list">
             {group.items.map((item) => (
               <li key={item.id}>

@@ -1,87 +1,79 @@
+import { Component, isValidElement, type ComponentProps, type ReactNode } from "react";
+import type { MDXComponents } from "mdx/types";
+import { useBDMdxContent } from "../../hooks/useBDMdxContent";
+import { useLocalMdxContent } from "../../hooks/useLocalMdxContent";
+import { Button } from "../Button";
+import { Typography } from "../Typography";
 import "./style.scss";
 
 type MdxContentProps = {
   title: string;
-  mdx_source: string;
+} & ({ source: "db"; mdx_source: string } | { source: "local"; file: string });
+
+const mdxComponents: MDXComponents = {
+  Button,
+  Typography,
+  pre: ({ children, ...props }: ComponentProps<"pre">) => {
+    const language = isValidElement<{ className?: string }>(children)
+      ? /(?:^|\s)language-(\S+)/.exec(children.props.className ?? "")?.[1]
+      : undefined;
+
+    return (
+      <div className="mdx-content__code">
+        {language && <div className="mdx-content__code-title">{language}</div>}
+        <pre {...props}>{children}</pre>
+      </div>
+    );
+  },
 };
 
-const htmlExample = `<!DOCTYPE html>
-<html>
-  <head>
-    <title>Мой первый сайт</title>
-  </head>
-  <body>
-    <h1>Привет, мир!</h1>
-    <p>Это моя первая веб-страница на HTML.</p>
-  </body>
-</html>`;
+class MdxErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
+  state: { error: Error | null } = { error: null };
 
-// Временная JSX-статья для оформления. Преобразование mdx_source добавим позже.
-export const MdxContent = ({ title }: MdxContentProps) => {
+  static getDerivedStateFromError(error: unknown) {
+    return { error: error instanceof Error ? error : new Error(String(error)) };
+  }
+
+  render() {
+    if (this.state.error) {
+      return (
+        <p className="mdx-content__message" role="alert">
+          Не удалось отобразить материал: {this.state.error.message}
+        </p>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+export const MdxContent = (props: MdxContentProps) => {
+  const dbContent = useBDMdxContent(props.source === "db" ? props.mdx_source : undefined);
+  const localContent = useLocalMdxContent(props.source === "local" ? props.file : undefined);
+  const { Content, isLoading, error } = props.source === "db" ? dbContent : localContent;
+  const contentKey = props.source === "db" ? "db:" + props.mdx_source : "local:" + props.file;
+
   return (
-    <div className="mdx-content">
-      <h1>{title}</h1>
+    <div className="mdx-content" aria-busy={isLoading}>
+      <h1>{props.title}</h1>
 
-      <h2>Что такое веб-страница</h2>
-      <h3>Пример заголовка третьего уровня</h3>
-      <p><strong>Веб-страница</strong> — это документ, который открывается в браузере.</p>
+      {isLoading && (
+        <p className="mdx-content__message" role="status">
+          Подготовка материала...
+        </p>
+      )}
 
-      <p className="mdx-content__list-caption">Примеры списка:</p>
-      <ul>
-        <li>Google Chrome;</li>
-        <li>Яндекс Браузер;</li>
-        <li>Safari;</li>
-        <li>Mozilla Firefox;</li>
-        <li>Microsoft Edge.</li>
-      </ul>
+      {error && (
+        <p className="mdx-content__message" role="alert">
+          Не удалось загрузить материал: {error.message}
+        </p>
+      )}
 
-      <p><a href="#what-is-html">Пример ссылки</a></p>
-
-      <h2 id="what-is-html">Что такое HTML</h2>
-      <p>
-        <strong>HTML (HyperText Markup Language)</strong> — это язык гипертекстовой разметки
-        страницы, который отвечает за структуру и содержание страницы. Он не программирует,
-        а описывает, как должна выглядеть страница в браузере: где заголовок, где картинка,
-        где текст, куда ведёт ссылка и так далее.
-      </p>
-      <p>
-        Каждый такой элемент в HTML называется тегом. Теги определяют назначение элемента
-        и его наполнение. В данном курсе мы познакомимся с основным набором тегов,
-        которого будет достаточно для верстки любой веб-страницы.
-      </p>
-      <p>Рассмотрим пример простейшей HTML-страницы:</p>
-
-      <div className="mdx-content__code">
-        <div className="mdx-content__code-title">html</div>
-        <pre><code>{htmlExample}</code></pre>
-      </div>
-
-      <p>
-        Не пугайтесь всего того, что здесь есть. Со временем для вас это перестанет быть
-        «магией», и вы с легкостью будете ориентироваться в HTML-разметке.
-      </p>
-
-      <h2>Структура HTML-документа</h2>
-      <p>
-        Документ начинается с объявления <code>&lt;!DOCTYPE html&gt;</code>.
-        Оно сообщает браузеру, что страница использует современный стандарт HTML.
-        Внутри корневого элемента <code>&lt;html&gt;</code> находятся две основные части:
-        <code> &lt;head&gt;</code> и <code>&lt;body&gt;</code>.
-      </p>
-
-      <h3>Содержимое head</h3>
-      <p>
-        В <code>&lt;head&gt;</code> размещают информацию о странице: её название,
-        кодировку, ссылки на стили и другие настройки. Заголовок вкладки браузера
-        задают с помощью элемента <code>&lt;title&gt;</code>.
-      </p>
-
-      <h3>Содержимое body</h3>
-      <p>
-        В <code>&lt;body&gt;</code> находится видимое содержимое страницы:
-        заголовки, абзацы, списки, изображения и ссылки. Именно эту часть документа
-        видит пользователь в окне браузера.
-      </p>
+      {Content && (
+        <MdxErrorBoundary key={contentKey}>
+          <Content components={mdxComponents} />
+        </MdxErrorBoundary>
+      )}
     </div>
   );
 };

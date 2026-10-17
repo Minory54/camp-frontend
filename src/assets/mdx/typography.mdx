@@ -1,0 +1,26 @@
+import { Typography } from "../../components/Typography";
+
+## О компоненте
+
+`Typography` задаёт оформление текста через свойство `variable`. В локальном MDX компоненты можно импортировать непосредственно из проекта.
+
+## Обычный текст
+
+<Typography>Пример текста компонента Typography.</Typography>
+
+```tsx
+<Typography>Пример текста компонента Typography.</Typography>
+```
+
+## Заголовки
+
+Доступны варианты `title`, `subtitle` и `subsubtitle`.
+
+<Typography variable="subtitle">Пример подзаголовка</Typography>
+
+<Typography variable="subsubtitle">Пример заголовка третьего уровня</Typography>
+
+```tsx
+<Typography variable="subtitle">Пример подзаголовка</Typography>
+<Typography variable="subsubtitle">Пример заголовка третьего уровня</Typography>
+```

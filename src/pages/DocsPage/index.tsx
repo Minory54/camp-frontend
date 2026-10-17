@@ -13,8 +13,15 @@ type DocsPageProps = {
   section: "theory" | "components";
 };
 
+const componentDocuments = [
+  { id: "button", title: "Кнопка", file: "button.mdx" },
+  { id: "typography", title: "Текст", file: "typography.mdx" },
+  { id: "example", title: "Пример", file: "example.mdx" },
+];
+
 export const DocsPage = ({ section }: DocsPageProps) => {
   const { id } = useParams();
+  const localDocument = componentDocuments.find((document) => document.id === id);
   const contentRef = useRef<HTMLElement>(null);
   const groupsQuery = useGetTechnologies({
     query: { enabled: section === "theory" },
@@ -35,7 +42,12 @@ export const DocsPage = ({ section }: DocsPageProps) => {
   let navigation: ReactNode;
 
   if (section === "components") {
-    navigation = <h2 className="docs__panel-title">Библиотека компонентов</h2>;
+    navigation = (
+      <DocsNavigation
+        groups={[{ id: "components", title: "Библиотека компонентов", items: componentDocuments }]}
+        basePath={ROUTES.COMPONENTS}
+      />
+    );
   } else if (groupsQuery.isPending) {
     navigation = <p className="docs__message">Загрузка материалов...</p>;
   } else if (groupsQuery.isError) {
@@ -55,10 +67,16 @@ export const DocsPage = ({ section }: DocsPageProps) => {
 
   let content: ReactNode;
 
-  if (section === "components") {
-    content = <p className="docs__message">Библиотека компонентов скоро появится.</p>;
-  } else if (!id) {
+  if (!id) {
     content = <p className="docs__message">← Выберите материал</p>;
+  } else if (section === "components") {
+    content = localDocument ? (
+      <MdxContent source="local" title={localDocument.title} file={localDocument.file} />
+    ) : (
+      <p className="docs__message" role="alert">
+        Материал не найден.
+      </p>
+    );
   } else if (documentQuery.isPending) {
     content = <p className="docs__message">Загрузка материала...</p>;
   } else if (documentQuery.isError) {
@@ -72,7 +90,11 @@ export const DocsPage = ({ section }: DocsPageProps) => {
     );
   } else {
     content = (
-      <MdxContent title={documentQuery.data.title} mdx_source={documentQuery.data.mdx_source} />
+      <MdxContent
+        source="db"
+        title={documentQuery.data.title}
+        mdx_source={documentQuery.data.mdx_source}
+      />
     );
   }
 
@@ -92,8 +114,8 @@ export const DocsPage = ({ section }: DocsPageProps) => {
           <h2 className="docs__panel-title" id="docs-contents-title">
             Содержание
           </h2>
-          {section === "theory" && id && documentQuery.isSuccess && (
-            <TableOfContents contentRef={contentRef} documentId={documentQuery.data.id} />
+          {id && (section === "components" ? Boolean(localDocument) : documentQuery.isSuccess) && (
+            <TableOfContents contentRef={contentRef} documentId={section + ":" + id} />
           )}
         </aside>
       </main>

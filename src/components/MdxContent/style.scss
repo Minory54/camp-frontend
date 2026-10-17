@@ -5,9 +5,9 @@
   line-height: 1.2;
   overflow-wrap: break-word;
 
-  h1,
-  h2,
-  h3 {
+  h1:not([class]),
+  h2:not([class]),
+  h3:not([class]) {
     margin: 28px 0 20px;
     font-family: "8bitoperatorJVE", sans-serif;
     font-weight: 700;
@@ -19,7 +19,7 @@
     }
   }
 
-  h1 {
+  h1:not([class]) {
     margin-top: 0;
     margin-bottom: 28px;
     font-size: 24px;
@@ -29,7 +29,7 @@
     }
   }
 
-  h2 {
+  h2:not([class]) {
     font-size: 18px;
 
     &::before {
@@ -37,7 +37,7 @@
     }
   }
 
-  h3 {
+  h3:not([class]) {
     margin-top: 22px;
     font-size: 14px;
 
@@ -46,7 +46,7 @@
     }
   }
 
-  p,
+  p:not([class]),
   ul,
   ol {
     margin-bottom: 20px;
@@ -64,6 +64,10 @@
     margin-bottom: 0;
   }
 
+  > .button {
+    margin-bottom: 20px;
+  }
+
   a {
     color: inherit;
     text-decoration: underline;
@@ -78,6 +82,34 @@
   code {
     font-family: monospace;
     font-size: 12px;
+  }
+
+  :not(pre) > code {
+    padding: 2px 4px;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+
+  blockquote {
+    margin: 0 0 20px;
+    padding-left: 16px;
+    border-left: 3px solid $accent-color;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  hr {
+    margin: 24px 0;
+    border: 0;
+    border-top: 1px solid $border-main-color;
+  }
+
+  &__message {
+    line-height: 1.5;
+    white-space: pre-wrap;
   }
 
   &__code {
