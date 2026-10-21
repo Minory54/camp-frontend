@@ -1,0 +1,73 @@
+@use "../../styles/index" as *;
+
+.test-question {
+  @include flex-column;
+  gap: 20px;
+  width: 100%;
+
+  &__content {
+    @include flex-column;
+    gap: 12px;
+  }
+
+  &__title {
+    font-size: 28px;
+  }
+
+  &__code {
+    padding: 12px;
+    overflow-x: auto;
+    background: $code-bg-color;
+    color: $text-light-color;
+    tab-size: 2;
+  }
+
+  &__hint {
+    color: rgba($text-dark-color, 0.7);
+    font-size: 14px;
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: none;
+  }
+
+  &__option {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px;
+    clip-path: $pixel-shape;
+    border: none;
+    border-image: pixel-border-image($border-main-color);
+    background: $background-color;
+    font-size: 16px;
+    line-height: 1.5;
+    cursor: pointer;
+
+    &:has(input:checked) {
+      border-image: pixel-border-image($accent-color);
+      background: $tooltip-blue-second-color;
+    }
+
+    input {
+      width: 16px;
+      margin: 2px 0;
+      cursor: inherit;
+    }
+  }
+
+  &__error {
+    color: $warning-color;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  &__actions {
+    margin-top: 12px;
+  }
+}
