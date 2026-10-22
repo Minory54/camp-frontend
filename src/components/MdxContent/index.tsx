@@ -25,7 +25,46 @@ const mdxComponents: MDXComponents = {
       </div>
     );
   },
+  h1: ({ children }: ComponentProps<"h1">) => {
+    return (
+      <Typography variable="title" mdx>
+        {children}
+      </Typography>
+    );
+  },
+  h2: ({ children }: ComponentProps<"h2">) => {
+    return (
+      <Typography variable="subtitle" mdx>
+        {children}
+      </Typography>
+    );
+  },
+  h3: ({ children }: ComponentProps<"h3">) => {
+    return (
+      <Typography variable="subsubtitle" mdx>
+        {children}
+      </Typography>
+    );
+  },
+  p: ({ children }: ComponentProps<"p">) => {
+    return <Typography mdx>{children}</Typography>;
+  },
+  ol: ({ children }: ComponentProps<"ol">) => {
+    return <ol className="list">{children}</ol>;
+  },
 
+  ul: ({ children }: ComponentProps<"ul">) => {
+    return <ul className="list">{children}</ul>;
+  },
+  a: ({ children }: ComponentProps<"a">) => {
+    return <a className="link">{children}</a>;
+  },
+  blockquote: ({ children }: ComponentProps<"blockquote">) => {
+    return <blockquote className="blockquote">{children}</blockquote>;
+  },
+  img: ({ ...props }: ComponentProps<"img">) => {
+    return <img {...props} className="img"></img>;
+  },
 };
 
 class MdxErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
@@ -56,7 +95,7 @@ export const MdxContent = (props: MdxContentProps) => {
 
   return (
     <div className="mdx-content" aria-busy={isLoading}>
-      <h1>{props.title}</h1>
+      <Typography variable="title">{props.title}</Typography>
 
       {isLoading && (
         <p className="mdx-content__message" role="status">

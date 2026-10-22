@@ -1,92 +1,692 @@
-[[Главная]] 
-# Что такое веб-страница
-**Веб-страница** — это документ, который открывается в браузере.
-**Браузер** — это программа, которая умеет читать код страницы и показывать его человеку в понятном виде.
+**CSS Grid** — система раскладки для создания строк и столбцов. Она подходит для галерей, карточек, основных областей страницы и макетов, где важно управлять двумя направлениями одновременно.
 
-Примеры браузеров:
-* Google Chrome;
-* Яндекс Браузер;
-* Safari;
-* Mozilla Firefox;
-* Microsoft Edge.
-
-Когда мы открываем сайт, браузер получает файлы сайта, читает их и показывает страницу на экране.
-
-Обычно у простой веб-страницы есть два главных файла:
-- index.html - отвечает за содержимое страницы.
-- style.css - отвечает за внешний вид страницы.
-
-# Что такое HTML
-**HTML** (HyperText Markup Language) — это язык гипертекстовой разметки страницы, который отвечает за структуру и содержание страницы. Он не программирует, а описывает, как должна выглядеть страница в браузере: где заголовок, где картинка, где текст, куда ведёт ссылка и так далее.
-
-Каждый такой элемент в HTML называется **тегом**. Теги определяют назначение элемента и его наполнение. В данном курсе мы познакомимся с основным набором тегов, которого будет достаточно для верстки любой веб-страницы. 
-
-Рассмотрим пример простейшей HTML-страницы:
-``` html
- <!DOCTYPE html>
-<html>
-  <head>
-    <title>Мой первый сайт</title>
-  </head>
-  <body>
-    <h1>Привет, мир!</h1>
-    <p>Это моя первая веб-страница на HTML.</p>
-  </body>
-</html>
-```
-(и то как это выглядит на сайте без стилей)
-
-Пока это выглядит давольно просто и скучно, а чтобы сайт выглядел красиво и реагировал на действия пользователя, HTML используется вместе с другими технологиями:
-- CSS — оформляет внешний вид: цвета, отступы, шрифты.
-- JavaScript — добавляет интерактив: анимации, кнопки, всплывающие окна и логику поведения страницы.
-
-Взгляните внимательно на страницу, на которой вы сейчас находитесь. Вся она вне зависимости от внешнего вида описана с помощью HTML. Вы можете сами попробовать открыть разметку этой страницы с помощью комбинации `Ctrl + U` или `Command + Option + U` (на macOS).
-
-Не пугайтесь всего того, что здесь есть. Со временем для вас это перестанет быть «магией», и вы с легкостью будете ориентироваться в HTML-разметке.
-
-С помощью HTML можно верстать любые страницы, которые открываются в браузере. Это могут быть:
-- сайты и лендинги — от простых визиток до огромных порталов;
-- письма для рассылок — да, они тоже пишутся на HTML (но с оговорками);
-- интерфейсы в админках и CMS — форма входа, таблица с заказами, карточка товара;
-- документация, инструкции и статьи — если они отображаются прямо в браузере;
-- шаблоны для генерации PDF или отчётов — HTML используется как основа.
-
-А ещё HTML нужен, чтобы делать прототипы, встраивать виджеты, подключать аналитику и даже делать интерфейсы для интернет вещей (IoT). В общем, всё, что хоть как-то связано с вебом, — всё начинается с HTML.
-
-Еще одним важным понятием является **«Дерево элементов» (или DOM-дерево)** — это внутренняя структура, которую браузер строит, когда читает HTML-код. Она показывает, какие элементы есть на странице и как они связаны между собой — кто является «родителем», «дочерним элементом» и т.д.
-
-Браузер не просто видит текст с тегами, а превращает его в **иерархию объектов**, где каждый тег — **узел дерева**.
-
-Визуально этот код из HTML:
+# Grid-контейнер
 ```html
-<body>
-  <h1>Привет</h1>
-  <p>Это пример</p>
-</body>
+<section class="gallery">
+  <article class="gallery__item">1</article>
+  <article class="gallery__item">2</article>
+  <article class="gallery__item">3</article>
+</section>
 ```
 
-Будет выглядеть так:
-```javascript
-html
- └── body
-      ├── h1
-      │    └── "Привет"
-      └── p
-           └── "Это пример"
+```css
+.gallery {
+  display: grid;
+}
 ```
 
-Как мы видим главным (корневым) элементом является `<html>`, затем у него есть ветви `<head>`  и `<body>`. Уже внутри них могут присутствовать **дочерние элементы**: заголовки, абзацы, ссылки и т.д.
+<div className='example'>
+<section style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+  <article style={{ padding: '18px', backgroundColor: '#dbeafe' }}>1</article>
+  <article style={{ padding: '18px', backgroundColor: '#bfdbfe' }}>2</article>
+  <article style={{ padding: '18px', backgroundColor: '#93c5fd' }}>3</article>
+</section>
+</div>
 
-# Что такое CSS
-**CSS** (Cascading Style Sheets) — это язык стилей, с помощью которого оформляют веб-страницы. Он определяет, как именно должны отображаться HTML-элементы: их цвет, размеры, расположение, шрифты, анимацию и так далее.
+`.gallery` становится grid-контейнером, а его непосредственные дочерние элементы — grid-элементами.
 
-Получается, что HTML создает элементы страницы, CSS оформляет эти элементы.
+# Столбцы grid-template-columns
+Три столбца одинаковой ширины:
+```css
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+```
 
-Возьмем для примера главную страницу нашего курса. Вот как она выглядит благодаря стилям CSS:
-(картинка)
+Единица `fr` означает долю свободного места.
 
-А теперь отключим стили и посмотрим, что получилось. Стало сильно хуже в визуальном плане:
-(картинка)
+Сокращённая запись:
+```css
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+```
 
+Столбцы разной ширины:
+```css
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+}
+```
 
+<div className='example'>
+<div style={{ display: 'grid', gridTemplateColumns: '140px 1fr', gap: '12px' }}>
+  <aside style={{ padding: '12px', backgroundColor: '#e2e8f0' }}>Меню</aside>
+  <main style={{ padding: '12px', backgroundColor: '#f8fafc' }}>Основное содержимое</main>
+</div>
+</div>
 
+Первый столбец фиксированный, второй занимает оставшееся место.
+
+# Строки grid-template-rows
+```css
+.layout {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100dvh;
+}
+```
+
+Верхняя и нижняя строки зависят от содержимого, средняя занимает свободное место.
+
+Во многих карточках строки создаются автоматически, поэтому `grid-template-rows` требуется не всегда.
+
+# Расстояние gap
+```css
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+```
+
+Можно разделить направления:
+```css
+.gallery {
+  row-gap: 32px;
+  column-gap: 24px;
+}
+```
+
+# Адаптивные столбцы без медиазапроса
+
+```css
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+```
+
+Разбор:
+- `minmax(240px, 1fr)` — столбец не уже `240px`, но может расти;
+- `auto-fit` — браузер размещает столько столбцов, сколько помещается;
+- `repeat()` повторяет описание столбца.
+
+Если контейнер становится узким, карточки переходят на новые строки.
+
+`auto-fill` и `auto-fit` похожи, но по-разному обращаются с пустыми возможными колонками. Для обычной адаптивной галереи чаще удобен `auto-fit`.
+
+# Размещение элемента по линиям
+Grid-линии нумеруются от `1`.
+
+```css
+.featured-card {
+  grid-column: 1 / 3;
+}
+```
+
+Элемент занимает пространство от первой до третьей линии, то есть два столбца.
+
+С помощью `span`:
+```css
+.featured-card {
+  grid-column: span 2;
+}
+```
+
+По строкам:
+```css
+.tall-card {
+  grid-row: span 2;
+}
+```
+
+На узком экране такие правила нужно проверять: элемент может занимать больше колонок, чем доступно.
+
+# Именованные области
+
+```css
+.page {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+}
+
+.page__header {
+  grid-area: header;
+}
+
+.page__sidebar {
+  grid-area: sidebar;
+}
+
+.page__main {
+  grid-area: main;
+}
+
+.page__footer {
+  grid-area: footer;
+}
+```
+
+Именованные области делают крупную структуру наглядной. Каждая строка шаблона должна иметь одинаковое количество ячеек.
+
+Для простых рядов карточек области не нужны.
+
+# Выравнивание элементов
+## justify-items
+Выравнивает содержимое ячеек по горизонтальному направлению строки.
+
+```css
+.gallery {
+  justify-items: center;
+}
+```
+
+## align-items
+Выравнивает по вертикальному направлению внутри ячейки.
+
+```css
+.gallery {
+  align-items: center;
+}
+```
+
+## place-items
+Сокращает оба свойства.
+
+```css
+.icon-grid {
+  display: grid;
+  place-items: center;
+}
+```
+
+## justify-content и align-content
+
+Распределяют всю grid-сетку внутри контейнера, если сетка меньше доступного места.
+
+# Выравнивание отдельного элемента
+```css
+.card--special {
+  justify-self: center;
+  align-self: start;
+}
+```
+
+Сокращение:
+```css
+.card--special {
+  place-self: start center;
+}
+```
+
+# Неявная сетка
+Если элементов больше, чем описано в шаблоне, браузер создаёт дополнительные строки или столбцы.
+
+```css
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(160px, auto);
+}
+```
+
+`grid-auto-rows` задаёт размер автоматически созданных строк.
+
+# Полезное min-width: 0
+Иногда длинный текст или ссылка не позволяет grid-элементу сжаться и вызывает переполнение.
+
+```css
+.grid-item {
+  min-width: 0;
+}
+```
+
+Это не нужно добавлять всем элементам заранее, но полезно помнить при неожиданной горизонтальной прокрутке.
+
+# Grid или Flexbox
+Grid удобнее, если:
+- нужны строки и столбцы одновременно;
+- элементы должны совпадать по колонкам;
+- создаётся галерея;
+- есть крупные области страницы.
+
+Flexbox удобнее, если:
+- элементы идут одной строкой или столбцом;
+- нужно распределить пространство в одном направлении;
+- выравниваются иконка и подпись;
+- создаётся меню или панель кнопок.
+
+Пример совместного использования:
+
+```css
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.card__actions {
+  display: flex;
+  gap: 12px;
+}
+```
+**CSS Grid** — система раскладки для создания строк и столбцов. Она подходит для галерей, карточек, основных областей страницы и макетов, где важно управлять двумя направлениями одновременно.
+
+# Grid-контейнер
+```html
+<section class="gallery">
+  <article class="gallery__item">1</article>
+  <article class="gallery__item">2</article>
+  <article class="gallery__item">3</article>
+</section>
+```
+
+<div className='example'>
+<section className="gallery">
+  <article className="gallery__item">1</article>
+  <article className="gallery__item">2</article>
+  <article className="gallery__item">3</article>
+</section>
+</div>
+
+```css
+.gallery {
+  display: grid;
+}
+```
+
+<div className='example'>
+<section style={{ display: 'grid' }}>
+  <article style={{ padding: '10px', backgroundColor: '#dbeafe' }}>1</article>
+  <article style={{ padding: '10px', backgroundColor: '#bfdbfe' }}>2</article>
+  <article style={{ padding: '10px', backgroundColor: '#93c5fd' }}>3</article>
+</section>
+</div>
+
+`.gallery` становится grid-контейнером, а его непосредственные дочерние элементы — grid-элементами.
+
+# Столбцы grid-template-columns
+Три столбца одинаковой ширины:
+```css
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+```
+
+<div className='example'>
+<section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px' }}>
+  <article style={{ padding: '16px', backgroundColor: '#dbeafe' }}>Первый столбец</article>
+  <article style={{ padding: '16px', backgroundColor: '#bfdbfe' }}>Второй столбец</article>
+  <article style={{ padding: '16px', backgroundColor: '#93c5fd' }}>Третий столбец</article>
+</section>
+</div>
+
+Единица `fr` означает долю свободного места.
+
+Сокращённая запись:
+```css
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+```
+
+<div className='example'>
+<section style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+  <article style={{ padding: '16px', backgroundColor: '#dbeafe' }}>Карточка 1</article>
+  <article style={{ padding: '16px', backgroundColor: '#bfdbfe' }}>Карточка 2</article>
+  <article style={{ padding: '16px', backgroundColor: '#93c5fd' }}>Карточка 3</article>
+</section>
+</div>
+
+Столбцы разной ширины:
+```css
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+}
+```
+
+<div className='example'>
+<div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', gap: '12px' }}>
+  <aside style={{ padding: '12px', backgroundColor: '#e2e8f0' }}>Меню</aside>
+  <main style={{ padding: '12px', backgroundColor: '#f8fafc' }}>Основное содержимое</main>
+</div>
+</div>
+
+Первый столбец фиксированный, второй занимает оставшееся место.
+
+# Строки grid-template-rows
+```css
+.layout {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100dvh;
+}
+```
+
+<div className='example'>
+<div style={{ display: 'grid', gridTemplateRows: 'auto 1fr auto', minHeight: '220px', gap: '8px' }}>
+  <header style={{ padding: '10px', backgroundColor: '#dbeafe' }}>Шапка</header>
+  <main style={{ padding: '10px', backgroundColor: '#f1f5f9' }}>Основная область занимает свободное место</main>
+  <footer style={{ padding: '10px', backgroundColor: '#dbeafe' }}>Подвал</footer>
+</div>
+</div>
+
+Верхняя и нижняя строки зависят от содержимого, средняя занимает свободное место.
+
+Во многих карточках строки создаются автоматически, поэтому `grid-template-rows` требуется не всегда.
+
+# Расстояние gap
+```css
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+```
+
+<div className='example'>
+<section style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+  <article style={{ minHeight: '55px', padding: '12px', backgroundColor: '#dbeafe' }}>Карточка 1</article>
+  <article style={{ minHeight: '55px', padding: '12px', backgroundColor: '#bfdbfe' }}>Карточка 2</article>
+  <article style={{ minHeight: '55px', padding: '12px', backgroundColor: '#93c5fd' }}>Карточка 3</article>
+</section>
+</div>
+
+Можно разделить направления:
+```css
+.gallery {
+  row-gap: 32px;
+  column-gap: 24px;
+}
+```
+
+<div className='example'>
+<section style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', rowGap: '32px', columnGap: '24px' }}>
+  <article style={{ padding: '12px', backgroundColor: '#dbeafe' }}>1</article>
+  <article style={{ padding: '12px', backgroundColor: '#bfdbfe' }}>2</article>
+  <article style={{ padding: '12px', backgroundColor: '#93c5fd' }}>3</article>
+  <article style={{ padding: '12px', backgroundColor: '#dbeafe' }}>4</article>
+</section>
+</div>
+
+# Адаптивные столбцы без медиазапроса
+
+```css
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+```
+
+<div className='example'>
+<section style={{ maxWidth: '540px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
+  <article style={{ minHeight: '70px', padding: '12px', backgroundColor: '#dbeafe' }}>Карточка</article>
+  <article style={{ minHeight: '70px', padding: '12px', backgroundColor: '#bfdbfe' }}>Карточка</article>
+  <article style={{ minHeight: '70px', padding: '12px', backgroundColor: '#93c5fd' }}>Карточка</article>
+</section>
+</div>
+
+Разбор:
+- `minmax(240px, 1fr)` — столбец не уже `240px`, но может расти;
+- `auto-fit` — браузер размещает столько столбцов, сколько помещается;
+- `repeat()` повторяет описание столбца.
+
+Если контейнер становится узким, карточки переходят на новые строки.
+
+`auto-fill` и `auto-fit` похожи, но по-разному обращаются с пустыми возможными колонками. Для обычной адаптивной галереи чаще удобен `auto-fit`.
+
+# Размещение элемента по линиям
+Grid-линии нумеруются от `1`.
+
+```css
+.featured-card {
+  grid-column: 1 / 3;
+}
+```
+
+<div className='example'>
+<section style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+  <article style={{ gridColumn: '1 / 3', padding: '16px', backgroundColor: '#bfdbfe' }}>Широкая карточка занимает два столбца</article>
+  <article style={{ padding: '16px', backgroundColor: '#dbeafe' }}>Карточка</article>
+  <article style={{ padding: '16px', backgroundColor: '#93c5fd' }}>Карточка</article>
+</section>
+</div>
+
+Элемент занимает пространство от первой до третьей линии, то есть два столбца.
+
+С помощью `span`:
+```css
+.featured-card {
+  grid-column: span 2;
+}
+```
+
+<div className='example'>
+<section style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+  <article style={{ gridColumn: 'span 2', padding: '16px', backgroundColor: '#bfdbfe' }}>Элемент с span 2</article>
+  <article style={{ padding: '16px', backgroundColor: '#dbeafe' }}>Карточка</article>
+  <article style={{ padding: '16px', backgroundColor: '#93c5fd' }}>Карточка</article>
+</section>
+</div>
+
+По строкам:
+```css
+.tall-card {
+  grid-row: span 2;
+}
+```
+
+<div className='example'>
+<section style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridAutoRows: '65px', gap: '8px' }}>
+  <article style={{ gridRow: 'span 2', padding: '12px', backgroundColor: '#bfdbfe' }}>Высокий элемент занимает две строки</article>
+  <article style={{ padding: '12px', backgroundColor: '#dbeafe' }}>Карточка</article>
+  <article style={{ padding: '12px', backgroundColor: '#93c5fd' }}>Карточка</article>
+  <article style={{ padding: '12px', backgroundColor: '#dbeafe' }}>Карточка</article>
+</section>
+</div>
+
+На узком экране такие правила нужно проверять: элемент может занимать больше колонок, чем доступно.
+
+# Именованные области
+
+```css
+.page {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+}
+
+.page__header {
+  grid-area: header;
+}
+
+.page__sidebar {
+  grid-area: sidebar;
+}
+
+.page__main {
+  grid-area: main;
+}
+
+.page__footer {
+  grid-area: footer;
+}
+```
+
+<div className='example'>
+<div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gridTemplateAreas: '"header header" "sidebar main" "footer footer"', gap: '8px' }}>
+  <header style={{ gridArea: 'header', padding: '10px', backgroundColor: '#bfdbfe' }}>Шапка</header>
+  <aside style={{ gridArea: 'sidebar', padding: '10px', backgroundColor: '#e2e8f0' }}>Меню</aside>
+  <main style={{ gridArea: 'main', padding: '10px', backgroundColor: '#f1f5f9' }}>Содержимое</main>
+  <footer style={{ gridArea: 'footer', padding: '10px', backgroundColor: '#bfdbfe' }}>Подвал</footer>
+</div>
+</div>
+
+Именованные области делают крупную структуру наглядной. Каждая строка шаблона должна иметь одинаковое количество ячеек.
+
+Для простых рядов карточек области не нужны.
+
+# Выравнивание элементов
+## justify-items
+Выравнивает содержимое ячеек по горизонтальному направлению строки.
+
+```css
+.gallery {
+  justify-items: center;
+}
+```
+
+<div className='example'>
+<section style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', justifyItems: 'center', gap: '8px' }}>
+  <span style={{ width: '70px', padding: '8px', backgroundColor: '#dbeafe' }}>A</span>
+  <span style={{ width: '70px', padding: '8px', backgroundColor: '#bfdbfe' }}>B</span>
+</section>
+</div>
+
+## align-items
+Выравнивает по вертикальному направлению внутри ячейки.
+
+```css
+.gallery {
+  align-items: center;
+}
+```
+
+<div className='example'>
+<section style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gridAutoRows: '80px', alignItems: 'center', gap: '8px' }}>
+  <span style={{ padding: '8px', backgroundColor: '#dbeafe' }}>По центру ячейки</span>
+  <span style={{ padding: '8px', backgroundColor: '#bfdbfe' }}>По центру ячейки</span>
+</section>
+</div>
+
+## place-items
+Сокращает оба свойства.
+
+```css
+.icon-grid {
+  display: grid;
+  place-items: center;
+}
+```
+
+<div className='example'>
+<div style={{ display: 'grid', placeItems: 'center', width: '100px', height: '100px', backgroundColor: '#dbeafe', fontSize: '32px' }}>★</div>
+</div>
+
+## justify-content и align-content
+
+Распределяют всю grid-сетку внутри контейнера, если сетка меньше доступного места.
+
+# Выравнивание отдельного элемента
+```css
+.card--special {
+  justify-self: center;
+  align-self: start;
+}
+```
+
+<div className='example'>
+<div style={{ display: 'grid', gridTemplateColumns: '1fr', gridTemplateRows: '120px', border: '1px solid #cbd5e1' }}>
+  <article style={{ justifySelf: 'center', alignSelf: 'start', padding: '10px', backgroundColor: '#bfdbfe' }}>По центру сверху</article>
+</div>
+</div>
+
+Сокращение:
+```css
+.card--special {
+  place-self: start center;
+}
+```
+
+<div className='example'>
+<div style={{ display: 'grid', gridTemplateRows: '120px', border: '1px solid #cbd5e1' }}>
+  <article style={{ placeSelf: 'start center', padding: '10px', backgroundColor: '#bfdbfe' }}>По центру сверху</article>
+</div>
+</div>
+
+# Неявная сетка
+Если элементов больше, чем описано в шаблоне, браузер создаёт дополнительные строки или столбцы.
+
+```css
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(160px, auto);
+}
+```
+
+<div className='example'>
+<section style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridAutoRows: 'minmax(90px, auto)', gap: '8px' }}>
+  <article style={{ padding: '12px', backgroundColor: '#dbeafe' }}>1</article>
+  <article style={{ padding: '12px', backgroundColor: '#bfdbfe' }}>2</article>
+  <article style={{ padding: '12px', backgroundColor: '#93c5fd' }}>3</article>
+  <article style={{ padding: '12px', backgroundColor: '#dbeafe' }}>Новая строка создаётся автоматически</article>
+</section>
+</div>
+
+`grid-auto-rows` задаёт размер автоматически созданных строк.
+
+# Полезное min-width: 0
+Иногда длинный текст или ссылка не позволяет grid-элементу сжаться и вызывает переполнение.
+
+```css
+.grid-item {
+  min-width: 0;
+}
+```
+
+<div className='example'>
+<div style={{ display: 'grid', gridTemplateColumns: '100px minmax(0, 1fr)', gap: '8px', maxWidth: '360px' }}>
+  <aside style={{ padding: '8px', backgroundColor: '#e2e8f0' }}>Меню</aside>
+  <div style={{ minWidth: 0, padding: '8px', backgroundColor: '#dbeafe', overflowWrap: 'anywhere' }}>Оченьдлиннаяссылкаилислово, которое иначе может растянуть колонку</div>
+</div>
+</div>
+
+Это не нужно добавлять всем элементам заранее, но полезно помнить при неожиданной горизонтальной прокрутке.
+
+# Grid или Flexbox
+Grid удобнее, если:
+- нужны строки и столбцы одновременно;
+- элементы должны совпадать по колонкам;
+- создаётся галерея;
+- есть крупные области страницы.
+
+Flexbox удобнее, если:
+- элементы идут одной строкой или столбцом;
+- нужно распределить пространство в одном направлении;
+- выравниваются иконка и подпись;
+- создаётся меню или панель кнопок.
+
+Пример совместного использования:
+
+```css
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.card__actions {
+  display: flex;
+  gap: 12px;
+}
+```
+
+<div className='example'>
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px' }}>
+  <article style={{ padding: '12px', border: '1px solid #cbd5e1' }}>
+    <h3 style={{ marginTop: 0 }}>Карточка 1</h3>
+    <div style={{ display: 'flex', gap: '8px' }}><button>Подробнее</button><button>Записаться</button></div>
+  </article>
+  <article style={{ padding: '12px', border: '1px solid #cbd5e1' }}>
+    <h3 style={{ marginTop: 0 }}>Карточка 2</h3>
+    <div style={{ display: 'flex', gap: '8px' }}><button>Подробнее</button><button>Записаться</button></div>
+  </article>
+</div>
+</div>

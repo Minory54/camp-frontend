@@ -1,7 +1,7 @@
 @use "../../styles/index.scss" as *;
 .text {
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 .text--display {
@@ -17,7 +17,7 @@
   @include text-title;
   font-size: 32px;
 
-  & + .mdx::before {
+  &.mdx::before {
     content: "# ";
     @include text-title;
     color: $accent-color;
@@ -28,7 +28,7 @@
   @include text-title;
   font-size: 24px;
 
-  & + .mdx::before {
+  &.mdx::before {
     content: "## ";
     @include text-title;
     color: $accent-color;
@@ -39,7 +39,7 @@
   @include text-title;
   font-size: 18px;
 
-  & + .mdx::before {
+  &.mdx::before {
     content: "### ";
     @include text-title;
     color: $accent-color;

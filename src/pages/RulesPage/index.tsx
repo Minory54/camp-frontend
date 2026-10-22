@@ -1,13 +1,13 @@
 import { Header } from "../../components/Header";
-import { Typography } from "../../components/Typography";
+import { MdxContent } from "../../components/MdxContent";
 
 export const RulePage = () => {
   return (
     <>
       <Header />
       <main className="layout-wrapper">
-        <section className="container">
-          <Typography>Система оценивания</Typography>
+        <section className="container rule-page">
+          <MdxContent source="local" title="Система оценивания" file="rule.mdx" />
         </section>
       </main>
     </>

@@ -8,11 +8,22 @@ export function useSubmitPractice() {
 
   return useCheckPractice({
     mutation: {
-      onSuccess: async () => {
-        if (!studentId) return;
+      networkMode: "always",
+      onSuccess: async (result) => {
+        if (!studentId || !result.passed) return;
 
         await queryClient.invalidateQueries({
-          queryKey: ["student", studentId, "progress"],
+          predicate: (query) => {
+            const [resource, params] = query.queryKey;
+            return (
+              typeof resource === "string" &&
+              /^\/api\/courses\/\d+\/progress$/.test(resource) &&
+              typeof params === "object" &&
+              params !== null &&
+              "studentId" in params &&
+              params.studentId === studentId
+            );
+          },
         });
       },
     },

@@ -1,5 +1,6 @@
 import { skipToken, useQuery } from "@tanstack/react-query";
 import * as runtime from "react/jsx-runtime";
+import rehypeHighlight from "rehype-highlight";
 
 export function useBDMdxContent(mdxSource?: string) {
   const query = useQuery({
@@ -9,7 +10,7 @@ export function useBDMdxContent(mdxSource?: string) {
         ? skipToken
         : async () => {
             const { evaluate } = await import("@mdx-js/mdx");
-            const { default: Content } = await evaluate(mdxSource, runtime);
+            const { default: Content } = await evaluate(mdxSource, {...runtime, rehypePlugins: [rehypeHighlight]});
 
             return Content;
           },

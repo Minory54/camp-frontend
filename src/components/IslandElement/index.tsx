@@ -1,4 +1,8 @@
 import type { GetCourseById200GroupsItemLessonsItem } from "../../api/generated/models";
+import { getGetCourseProgressQueryKey, useOpenLessonTheory } from "../../api/generated";
+import { getApiErrorMessage } from "../../api/http";
+import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 import { Button } from "../Button";
 import "./style.scss";
 import clsx from "clsx";
@@ -12,6 +16,17 @@ interface IslandElementProps {
 }
 
 export const IslandElement = ({ lesson, available, variable = "base" }: IslandElementProps) => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const openTheory = useOpenLessonTheory({
+    mutation: {
+      networkMode: "always",
+      onSuccess: () => {
+        void queryClient.invalidateQueries({ queryKey: getGetCourseProgressQueryKey(1) });
+        navigate(`/theory/${lesson?.id_theory}`);
+      },
+    },
+  });
   const buttons = [
     {
       id: lesson?.id_theory,
@@ -89,14 +104,22 @@ export const IslandElement = ({ lesson, available, variable = "base" }: IslandEl
                 return (
                   <div key={button.path} className="island-element__button">
                     <Button
-                      link={available}
-                      to={`${button.path}/${button.id}`}
+                      link={available && button.path !== "/theory"}
+                      to={`${button.path}/${button.id}${button.path === "/practice" ? `?lessonId=${lesson?.id}` : ""}`}
                       color={button.color}
-                      disabled = {!available}
+                      disabled={!available || (button.path === "/theory" && openTheory.isPending)}
+                      onClick={button.path === "/theory" ? () => {
+                        if (lesson && !openTheory.isPending) {
+                          openTheory.mutate({ id: lesson.id, data: {} });
+                        }
+                      } : undefined}
                       small
                     >
-                      {button.label}
+                      {button.path === "/theory" && openTheory.isPending ? "Сохраняем..." : button.label}
                     </Button>
+                    {button.path === "/theory" && openTheory.isError && (
+                      <p role="alert">{getApiErrorMessage(openTheory.error)}</p>
+                    )}
                     <div
                       className={clsx(
                         "island-element__tooltip",

@@ -11,7 +11,7 @@ $padding: 11vh;
     top: $padding;
     left: 0;
     width: 100%;
-    height: calc(100% - $padding);
+    height: 100%;
     object-fit: cover; /* Аналог background-size: cover */
     z-index: 1; /* Отправляем картинку на задний план */
     background-image: url(../../assets/images/background.png);

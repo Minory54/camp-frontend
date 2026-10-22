@@ -24,7 +24,7 @@
   &__nav {
     @include flex-center;
     align-items: center;
-    gap: 3.5vw;
+    gap: min(3.5vw, 48px);
   }
 }
 

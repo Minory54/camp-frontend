@@ -1,17 +1,31 @@
-import { useParams } from "react-router";
-import { useGetPracticeById } from "../../api/generated";
+import { useQuery } from "@tanstack/react-query";
+import { useParams, useSearchParams } from "react-router";
 import { getApiErrorMessage } from "../../api/http";
 import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
-import { MdxContent } from "../../components/MdxContent";
+import { useSessionStore } from "../../stores/sessionStore";
+import { ROUTES } from "../../units/routes";
+import { loadPractice } from "./practiceData";
+import { PracticeWorkspace } from "./PracticeWorkspace";
 import "./style.scss";
 
 export const PracticePage = () => {
   const { id } = useParams();
+  const [search] = useSearchParams();
+  const studentId = useSessionStore((state) => state.session?.studentId);
   const practiceId = Number(id);
+  const lessonId = search.has("lessonId") ? Number(search.get("lessonId")) : undefined;
   const isValidId = Number.isInteger(practiceId) && practiceId > 0;
-  const practiceQuery = useGetPracticeById(practiceId, {
-    query: { enabled: isValidId },
+  const practiceQuery = useQuery({
+    queryKey: ["practice-workspace", practiceId, studentId, lessonId],
+    queryFn: ({ signal }) => loadPractice(practiceId, studentId, lessonId, signal),
+    enabled: isValidId,
+    // Editors own their state until leaving. Reopen from the server next time.
+    staleTime: Infinity,
+    gcTime: 0,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    networkMode: "always",
   });
 
   let content;
@@ -25,6 +39,7 @@ export const PracticePage = () => {
   } else if (practiceQuery.isError) {
     content = (
       <div role="alert">
+        <p>Не удалось загрузить задание или сохранённое решение.</p>
         <p>{getApiErrorMessage(practiceQuery.error)}</p>
         <Button onClick={() => void practiceQuery.refetch()} small>
           Повторить
@@ -33,10 +48,10 @@ export const PracticePage = () => {
     );
   } else {
     content = (
-      <MdxContent
-        source="db"
-        title={practiceQuery.data.title}
-        mdx_source={practiceQuery.data.mdx_source}
+      <PracticeWorkspace
+        key={`${practiceId}:${studentId ?? "guest"}:${lessonId ?? "default"}`}
+        data={practiceQuery.data}
+        studentId={studentId}
       />
     );
   }
@@ -44,7 +59,20 @@ export const PracticePage = () => {
   return (
     <div className="practice">
       <Header />
-      <main className="practice__content">{content}</main>
+      <div className="practice__body">
+        {practiceQuery.isSuccess && isValidId ? (
+          content
+        ) : (
+          <>
+            <main className="practice__message">{content}</main>
+            <footer className="practice__footer">
+              <Button link to={ROUTES.ROADMAP} small>
+                Вернуться на карту
+              </Button>
+            </footer>
+          </>
+        )}
+      </div>
     </div>
   );
 };
