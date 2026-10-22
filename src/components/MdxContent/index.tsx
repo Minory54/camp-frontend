@@ -25,6 +25,7 @@ const mdxComponents: MDXComponents = {
       </div>
     );
   },
+
 };
 
 class MdxErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
